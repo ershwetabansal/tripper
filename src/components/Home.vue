@@ -3,7 +3,7 @@
     <div class="container">
       <div>
         <div class="search">
-          <gmap-autocomplete @place_changed="usePlace" placeholder="Search"></gmap-autocomplete>
+          <gmap-autocomplete @place_changed="usePlace" placeholder="Search" id="location-search"></gmap-autocomplete>
         </div>
 
         <gmap-map class="map" :zoom="1" :center="{lat: 0, lng: 0}">
@@ -53,8 +53,10 @@
 
     methods: {
       usePlace (place) {
-        console.log(place)
         this.place = place
+        if (!this.place || !this.place.geometry) {
+          return
+        }
         const position = this.searchedPlacePosition
         stopStore.add(Object.assign(stopStore.getDefault(), {
           position,
@@ -64,7 +66,7 @@
         }))
         this.markers.push({ position })
         this.place = null
-        document.getElementsByClassName('search')[0].value = ''
+        document.getElementById('location-search').value = ''
       },
 
       addMarkerDetails () {

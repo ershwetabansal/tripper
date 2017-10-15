@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 export const stopStore = {
   store: {
     stops: []
@@ -38,9 +40,9 @@ export const stopStore = {
   },
 
   changeStopOrder () {
-    this.store.stops.map((stop, index) => {
-      stop.number = index + 1
-      return stop
+    console.log(this.store.stops)
+    this.store.stops.forEach((stop, index) => {
+      Vue.set(stop, 'number', index + 1)
     })
   },
 
@@ -49,7 +51,7 @@ export const stopStore = {
   },
 
   remove (stop) {
-    this.store.stops.splice(this.findIndex(stop), 1)
+    this.store.stops.splice(this.getStopIndex(stop), 1)
     this.changeStopOrder()
   },
 
