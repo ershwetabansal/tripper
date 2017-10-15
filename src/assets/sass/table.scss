@@ -1,0 +1,49 @@
+@import 'vars';
+
+table {
+  border-collapse: collapse;
+  min-width: 100%;
+
+  th, td {
+    border: 1px solid $colorBorder;
+    padding: 13px 20px;
+    text-align: left;
+  }
+
+  th {
+    text-align: center;
+    padding: 15px 20px;
+    border-bottom-width: 3px;
+    text-transform: uppercase;
+  }
+
+  td.numeric {
+    text-align: right;
+  }
+}
+
+.table-striped {
+  th {
+    background: $colorBgr;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  td {
+    white-space: nowrap;
+  }
+
+  td.more {
+    text-align: center;
+    color: #ccc;
+    background: #fff;
+  }
+
+  tbody tr:nth-child(even) {
+    background: #fafafa;
+  }
+}
+
+.table-wrapper {
+  overflow: auto;
+}

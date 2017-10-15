@@ -1,0 +1,78 @@
+@import 'vars';
+
+input[type=search],
+input[type=text],
+input[type=password],
+input[type=url],
+input[type=number],
+input[type=date],
+input[type=datetime],
+input[type=email],
+textarea {
+  font: 13px/1 'Open Sans', sans-serif;
+  border: 1px solid #ccc;
+  --webkit-appearance: none;
+  line-height: 38px;
+  padding: 0 16px;
+  outline: none;
+  height: 40px;
+  &:focus {
+    border-color: $green;
+  }
+
+  &::placeholder {
+    color: #ccc;
+  }
+  &[disabled] {
+    opacity: 0.4
+  }
+}
+
+textarea {
+  height: auto;
+  line-height: 20px;
+  padding: 13px;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-inline {
+  display: table;
+  margin-bottom: $standardPadding;
+  .form-group {
+    line-height: 27px;
+    display: table-cell;
+    padding-right: 20px;
+  }
+}
+
+.form-group {
+  margin-bottom: $standardPadding;
+}
+
+.form-error {
+  color: $red;
+}
+
+.search {
+  position: relative;
+  input {
+    width: 100%;
+  }
+  &::after {
+    font-family: FontAwesome;
+    content: '\0f002';
+    position: absolute;
+    right: 15px;
+    top: 11px;
+    color: #ccc;
+  }
+}

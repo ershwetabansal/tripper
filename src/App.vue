@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <h1>Tripper</h1>
     <router-view/>
   </div>
 </template>
@@ -14,13 +15,19 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+  @import './assets/sass/app';
+
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
 </style>

@@ -1,41 +1,92 @@
 <template>
   <div class="home">
-    <gmap-map :center="center" :zoom="7" ref="mmm" style="width: 100%; height: 500px">
-      <gmap-marker :key="index" v-for="(m, index) in markers" :position="m.position"
-                   :clickable="true" :draggable="true" @click="center=m.position"></gmap-marker>
-    </gmap-map>
+    <div class="container">
+      <div>
+        <div class="search">
+          <gmap-autocomplete @place_changed="usePlace" placeholder="Search"></gmap-autocomplete>
+        </div>
+
+        <gmap-map class="map" :zoom="1" :center="{lat: 0, lng: 0}">
+          <gmap-marker v-for="(marker, index) in markers"
+                       :key="index"
+                       :position="marker.position"
+                       @click="addMarkerDetails"
+          ></gmap-marker>
+        </gmap-map>
+      </div>
+      <div>
+        <stop-list></stop-list>
+      </div>
+    </div>
+    <route v-if="isRouteClicked"></route>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'Home',
+  import Stop from './Stop.vue'
+  import Route from './Route.vue'
+  import StopList from './StopsList.vue'
+  import { stopStore } from '../stores'
 
-  data: function () {
-    return {
-      center: {
-        lat: 10.0,
-        lng: 10.0
+  export default {
+    name: 'Home',
+
+    components: { Stop, Route, StopList },
+
+    data: function () {
+      return {
+        place: null,
+        markers: [],
+        isMarkerClicked: false,
+        isRouteClicked: false
+      }
+    },
+
+    computed: {
+      searchedPlacePosition () {
+        return {
+          lat: this.place.geometry.location.lat(),
+          lng: this.place.geometry.location.lng()
+        }
+      }
+    },
+
+    methods: {
+      usePlace (place) {
+        console.log(place)
+        this.place = place
+        const position = this.searchedPlacePosition
+        stopStore.add(Object.assign(stopStore.getDefault(), {
+          position,
+          address: place.formatted_address,
+          isStartPoint: this.markers.length === 0,
+          isEndPoint: this.markers.length === 0
+        }))
+        this.markers.push({ position })
+        this.place = null
+        document.getElementsByClassName('search')[0].value = ''
       },
-      markers: [{
-        position: {
-          lat: 10.0,
-          lng: 10.0
-        }
-      }, {
-        position: {
-          lat: 11.0,
-          lng: 11.0
-        }
-      }]
+
+      addMarkerDetails () {
+        this.isMarkerClicked = true
+      }
     }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal
-}
+<style scoped lang="scss">
+  .home {
+    width: 45vw;
+    margin: 0 auto;
+  }
+
+  .container {
+    position: relative;
+  }
+
+  .map {
+    height: 50vh;
+    margin-top: 20px;
+  }
 </style>
