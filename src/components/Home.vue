@@ -6,10 +6,11 @@
           <gmap-autocomplete @place_changed="usePlace" placeholder="Search" id="location-search"></gmap-autocomplete>
         </div>
 
-        <gmap-map class="map" :zoom="1" :center="{lat: 0, lng: 0}">
-          <gmap-marker v-for="(marker, index) in markers"
+        <gmap-map class="map" :zoom="zoom" :center="center">
+          <gmap-marker v-for="(stop, index) in stops"
                        :key="index"
-                       :position="marker.position"
+                       :position="stop.position"
+                       :label="stop.number.toString()"
                        @click="addMarkerDetails"
           ></gmap-marker>
         </gmap-map>
@@ -25,6 +26,7 @@
 <script>
   import Stop from './Stop.vue'
   import Route from './Route.vue'
+  import { eventBus } from '../utils'
   import StopList from './StopsList.vue'
   import { stopStore } from '../stores'
 
@@ -36,9 +38,11 @@
     data: function () {
       return {
         place: null,
-        markers: [],
         isMarkerClicked: false,
-        isRouteClicked: false
+        isRouteClicked: false,
+        stops: stopStore.all(),
+        center: {lat: 0, lng: 0},
+        zoom: 1
       }
     },
 
@@ -58,20 +62,26 @@
           return
         }
         const position = this.searchedPlacePosition
-        stopStore.add(Object.assign(stopStore.getDefault(), {
-          position,
-          address: place.formatted_address,
-          isStartPoint: this.markers.length === 0,
-          isEndPoint: this.markers.length === 0
-        }))
-        this.markers.push({ position })
+        this.zoom = this.stops.length === 0 ? 4 : 2
+        this.$set(this.center, 'lat', position.lat)
+        this.$set(this.center, 'lng', position.lng)
+        stopStore.add(position, place.formatted_address)
         this.place = null
         document.getElementById('location-search').value = ''
+        this.refreshStops()
       },
 
       addMarkerDetails () {
         this.isMarkerClicked = true
+      },
+
+      refreshStops () {
+        this.stops = stopStore.all()
       }
+    },
+
+    created () {
+      eventBus.on('stops-updated', this.refreshStops)
     }
   }
 </script>

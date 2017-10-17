@@ -7,8 +7,8 @@
     <draggable v-model="stops" :options="{draggable:'.item'}" :element="'ul'" class="list-stops" @end="changeStopOrder">
       <li v-for="stop in stops" class="item">
         <span @click="updateStopDetails(stop)"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-        {{ stop.address }}
         <i class="fa fa-times pull-right" aria-hidden="true" @click="removeStop(stop)"></i>
+        {{ stop.address }}
       </li>
     </draggable>
     <stop v-if="isUpdateStopDetails" :stop="selectedStop"></stop>
@@ -19,6 +19,7 @@
   import Stop from './Stop.vue'
   import Draggable from 'vuedraggable'
   import { stopStore } from '../stores'
+  import { eventBus } from '../utils'
 
   export default {
     components: { Stop, Draggable },
@@ -43,11 +44,13 @@
       },
 
       changeStopOrder () {
-        stopStore.changeStopOrder()
+        eventBus.emit('stops-updated')
+        stopStore.updateStopList(this.stops)
       },
 
       removeStop (stop) {
         stopStore.remove(stop)
+        eventBus.emit('stops-updated')
       }
     }
   }

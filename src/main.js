@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import { eventBus } from './utils'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.config.productionTip = false
@@ -20,5 +21,8 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: { App },
+  created () {
+    eventBus.init()
+  }
 })
