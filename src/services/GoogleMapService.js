@@ -3,7 +3,7 @@ let mapInstance
 let infoWindow
 
 export const map = {
-  initalize (apiKey) {
+  initialize (apiKey) {
     const googleMapScript = document.createElement('SCRIPT')
     let url = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=initMap`
     googleMapScript.setAttribute('src', url)

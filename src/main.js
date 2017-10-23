@@ -15,6 +15,6 @@ new Vue({
   components: { App },
   created () {
     eventBus.init()
-    map.initalize(process.env.GOOGLE_API_KEY)
+    map.initialize(process.env.GOOGLE_API_KEY)
   }
 })
