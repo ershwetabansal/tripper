@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import Stop from './Stop.vue'
+  import Stop from './PlaceAdditionInformation.vue'
   import Draggable from 'vuedraggable'
   import { stopStore } from '../stores'
   import { eventBus } from '../utils'
@@ -44,8 +44,8 @@
       },
 
       changeStopOrder () {
-        eventBus.emit('stops-updated')
         stopStore.updateStopList(this.stops)
+        eventBus.emit('stops-updated')
       },
 
       removeStop (stop) {

@@ -3,85 +3,64 @@
     <div class="container">
       <div>
         <div class="search">
-          <gmap-autocomplete @place_changed="usePlace" placeholder="Search" id="location-search"></gmap-autocomplete>
+          <input type="text" placeholder="Enter location" ref="input" id="auto-complete"/>
         </div>
-
-        <gmap-map class="map" :zoom="zoom" :center="center">
-          <gmap-marker v-for="(stop, index) in stops"
-                       :key="index"
-                       :position="stop.position"
-                       :label="stop.number.toString()"
-                       @click="addMarkerDetails"
-          ></gmap-marker>
-        </gmap-map>
+        <div class="map" id="google-map"></div>
       </div>
       <div>
         <stop-list></stop-list>
       </div>
     </div>
-    <route v-if="isRouteClicked"></route>
   </div>
 </template>
 
 <script>
-  import Stop from './Stop.vue'
-  import Route from './Route.vue'
-  import { eventBus } from '../utils'
+  import Stop from './PlaceAdditionInformation.vue'
   import StopList from './StopsList.vue'
-  import { stopStore } from '../stores'
+  import GMap from './Google/GMap.vue'
+  import Route from './Route.vue'
+  import { map, place, marker, direction, distance } from '../services'
 
   export default {
     name: 'Home',
 
-    components: { Stop, Route, StopList },
+    components: { Stop, Route, StopList, GMap },
 
     data: function () {
       return {
-        place: null,
-        isMarkerClicked: false,
-        isRouteClicked: false,
-        stops: stopStore.all(),
+        places: [],
+        routes: [],
         center: {lat: 0, lng: 0},
-        zoom: 1
+        zoom: 1,
+        map: {}
       }
     },
 
-    computed: {
-      searchedPlacePosition () {
-        return {
-          lat: this.place.geometry.location.lat(),
-          lng: this.place.geometry.location.lng()
+    mounted () {
+      map.generate('google-map', {
+        center: this.center,
+        zoom: this.zoom
+      })
+      place.registerAutocomplete('auto-complete', place => {
+        marker.create(place)
+        this.places.push(place)
+        if (this.places.length > 1) {
+          const lastPlace = this.places[this.places.length - 2]
+          let route
+          direction.between(place.coordinates, lastPlace.coordinates)
+            .then(response => {
+              route = response
+              return distance.between(place.coordinates, lastPlace.coordinates)
+            })
+            .then(distanceDetails => {
+              route.origin = lastPlace
+              route.destination = place
+              route.distance = distanceDetails.distance
+              route.duration = distanceDetails.duration
+              this.routes.push(route)
+            })
         }
-      }
-    },
-
-    methods: {
-      usePlace (place) {
-        this.place = place
-        if (!this.place || !this.place.geometry) {
-          return
-        }
-        const position = this.searchedPlacePosition
-        this.zoom = this.stops.length === 0 ? 4 : 2
-        this.$set(this.center, 'lat', position.lat)
-        this.$set(this.center, 'lng', position.lng)
-        stopStore.add(position, place.formatted_address)
-        this.place = null
-        document.getElementById('location-search').value = ''
-        this.refreshStops()
-      },
-
-      addMarkerDetails () {
-        this.isMarkerClicked = true
-      },
-
-      refreshStops () {
-        this.stops = stopStore.all()
-      }
-    },
-
-    created () {
-      eventBus.on('stops-updated', this.refreshStops)
+      })
     }
   }
 </script>
