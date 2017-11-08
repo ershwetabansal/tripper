@@ -1,6 +1,7 @@
 let mapInitializingPromise
 let mapInstance
 let infoWindow
+let directionsService
 
 export const map = {
   initialize (apiKey) {
@@ -19,9 +20,10 @@ export const map = {
   },
 
   generate (elementId, options) {
-    mapInitializingPromise.then(() => {
+    return mapInitializingPromise.then(() => {
       /* eslint-disable no-undef */
       mapInstance = new google.maps.Map(document.getElementById(elementId), options)
+      directionsService = new google.maps.DirectionsService()
       return mapInstance
     })
   }
@@ -73,15 +75,25 @@ export const marker = {
 export const direction = {
   between (origin, destination, travelMode = 'DRIVING') {
     const directionsDisplay = new google.maps.DirectionsRenderer()
-    const directionsService = new google.maps.DirectionsService()
-    directionsDisplay.setMap(mapInstance)
+
     return new Promise((resolve, reject) => {
       directionsService.route({ origin, destination, travelMode }, (response, status) => {
         if (status === 'OK') {
+          directionsDisplay.setMap(mapInstance)
           directionsDisplay.setDirections(response)
+          response.mapObject = directionsDisplay
           return resolve(response)
         }
-        reject(response)
+        const directLine = new google.maps.Polyline({
+          path: [origin, destination],
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        })
+        directLine.setMap(mapInstance)
+        response.mapObject = directLine
+        resolve(response)
       })
     })
   }
@@ -99,8 +111,8 @@ export const distance = {
         avoidHighways,
         avoidTolls
       }, (response, status) => {
-        if (status !== 'OK') {
-          return reject(response)
+        if (status !== 'OK' || response.rows[0].elements[0].status === 'ZERO_RESULTS') {
+          return resolve({})
         }
         resolve({
           distance: response.rows[0].elements[0].distance.text,
