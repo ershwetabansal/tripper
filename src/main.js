@@ -3,10 +3,21 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import { eventBus } from './utils'
+import auth from './auth'
 import { map } from './services'
+import { eventBus } from './utils'
 
 Vue.config.productionTip = false
+
+auth.init({
+  storageType: 'cookie',
+  oauthProviders: {
+    google: {
+      client_id: '1030053840594-6ugu7n22c0bhr1ndhumq7fvps6v0vekd.apps.googleusercontent.com'
+    }
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
