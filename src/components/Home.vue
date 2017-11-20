@@ -16,9 +16,9 @@
 
 <script>
   import Route from './Route.vue'
+  import { eventBus } from '../utils'
   import PlaceList from './Place/PlaceList.vue'
   import { map, place, marker, direction, distance } from '../services'
-  import { eventBus } from '../utils'
 
   export default {
     name: 'Home',
@@ -119,11 +119,9 @@
 
   .container {
     position: relative;
-    padding: 20px;
   }
 
   .map {
-    height: 80vh;
-    margin-top: 20px;
+    height: 93vh;
   }
 </style>

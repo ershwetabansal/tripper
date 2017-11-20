@@ -1,5 +1,6 @@
 'use strict'
 require('./check-versions')()
+const mock = require('./api-mock')
 
 const config = require('../config')
 if (!process.env.NODE_ENV) {
@@ -9,6 +10,7 @@ if (!process.env.NODE_ENV) {
 const opn = require('opn')
 const path = require('path')
 const express = require('express')
+var bodyParser = require('body-parser')
 const webpack = require('webpack')
 const proxyMiddleware = require('http-proxy-middleware')
 const webpackConfig = (process.env.NODE_ENV === 'testing' || process.env.NODE_ENV === 'production')
@@ -25,6 +27,9 @@ const proxyTable = config.dev.proxyTable
 
 const app = express()
 const compiler = webpack(webpackConfig)
+
+app.use(bodyParser.json())
+mock.setUpMocks(app)
 
 const devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
