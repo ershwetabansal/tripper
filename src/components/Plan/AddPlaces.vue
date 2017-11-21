@@ -3,7 +3,7 @@
     <div class="container">
       <div>
         <div class="search">
-          <input type="text" placeholder="Where are you starting from?" ref="search" id="auto-complete"/>
+          <input type="text" :placeholder="placeholder" ref="search" id="auto-complete"/>
         </div>
         <div class="map" id="google-map"></div>
       </div>
@@ -32,6 +32,14 @@
         center: {lat: 0, lng: 0},
         zoom: 1,
         map: null
+      }
+    },
+
+    computed: {
+      placeholder () {
+        return this.places.length === 0
+          ? 'Where are you starting from?'
+          : 'Where are you going next?'
       }
     },
 
@@ -83,9 +91,19 @@
 
     mounted () {
       this.$refs.search.focus()
+      /* eslint-disable no-undef */
       this.map = map.generate('google-map', {
         center: this.center,
-        zoom: this.zoom
+        zoom: this.zoom,
+        scaleControl: false,
+        gestureHandling: 'cooperative',
+        zoomControl: true,
+        zoomControlOptions: {
+          position: google.maps.ControlPosition.RIGHT_TOP
+        },
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false
       })
 
       place.registerAutocomplete('auto-complete', this.addNewPlace)

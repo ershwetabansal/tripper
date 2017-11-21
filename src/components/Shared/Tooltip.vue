@@ -53,7 +53,7 @@
         cursor: auto;
         background-color: #393838;
         padding: 15px;
-        border-radius: 2px;
+        border-radius: $borderRadius;
         color: white;
         line-height: 20px;
         z-index: 20;

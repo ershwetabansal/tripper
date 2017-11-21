@@ -73,13 +73,13 @@
     width: 100%;
     height: 50px;
     padding: 10px;
-    border-top: 1px solid $colorBorder;
-    background-color: $themeColor;
-    color: $colorText;
+    border-top: 1px solid $colorContrastBorder;
+    background-color: $colorContrastBgr;
+    color: $colorContrastText;
     transition: 0.2s height ease-in-out;
     &.expanded {
       padding: 10px;
-      height: 50%;
+      height: 40%;
     }
   }
 

@@ -1,14 +1,22 @@
 $themeColor: #877ebd;
 
-$success: #639733;
-$default: #5f5f5f;
-$primary: #9e0036;
+$success: #735474;
+$default: #D7D9DB;
+$primary: #9D739F;
 $danger: #9e0036;
 $warning: #e5730b;
 
-$colorBgr: #efefef;
-$colorText: darken($themeColor, 25%);
-$colorBorder: darken($themeColor, 20%);
+$themeDarkerColor: #615B95;
+$themeLighterColor: #D7D9DB;
+
+$colorBgr: $themeDarkerColor;
+$colorBorder: #615B95;
+$colorText: #ffffff;
+
+$colorContrastBgr: #877ebd;
+$colorContrastBorder: transparent;
+$colorContrastText: #ffffff;
 
 $standardPadding: 20px;
 
+$borderRadius: 2px;

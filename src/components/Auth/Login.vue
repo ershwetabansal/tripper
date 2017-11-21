@@ -48,6 +48,8 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '../../assets/sass/_vars';
+
   ul {
      margin-top: 20vh;
      padding: 10%;
@@ -55,7 +57,7 @@
       padding: 10px;
       text-align: center;
       font-size: 1.3em;
-      border-radius: 2px;
+      border-radius: $borderRadius;
       margin-bottom: 20px;
       &.google {
         background: #dd4b39;
@@ -85,7 +87,7 @@
     background: white;
     padding: 5px;
     margin-right: 5px;
-    border-radius: 2px;
+    border-radius: $borderRadius;
   }
 
   .footer {

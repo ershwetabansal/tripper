@@ -4,7 +4,7 @@
       <div class="box">
         <form v-on:submit.prevent="createTrip">
           <div class="form-group">
-            <label>Give your trip a name</label>
+            <label>Give a name to your trip</label>
             <input type="text" placeholder="Iceland adventure" class="form-control" ref="name" required>
           </div>
 
@@ -37,7 +37,7 @@
 
     methods: {
       createTrip () {
-        this.$router.push('/plan')
+        this.$router.push('/plan/places')
       }
     },
 
@@ -56,7 +56,7 @@
     height: 100vh;
     padding: 20px;
     .box {
-      border-radius:2px;
+      border-radius: $borderRadius;
       background-color: $themeColor;
       width: 100%;
       padding: 20px;

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Plan from '@/components/Plan/Index'
+import Plan from '@/components/Plan/AddPlaces'
 import Login from '@/components/Auth/Login'
 import CreatePlan from '@/components/Plan/Create'
 
@@ -14,8 +14,8 @@ export default new Router({
       component: Login
     },
     {
-      path: '/plan',
-      name: 'Plan',
+      path: '/plan/places',
+      name: 'UpdatePlan',
       component: Plan
     },
     {
