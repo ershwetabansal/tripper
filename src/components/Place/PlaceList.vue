@@ -68,29 +68,22 @@
 
   .place-list {
     position: absolute;
-    top: 0;
+    bottom: 0;
     right: 0;
-    height: 100%;
+    width: 100%;
+    height: 50px;
     padding: 10px;
-    border: 1px solid $colorBorder;
-    width: 30px;
-    transition: 0.2s width ease-in-out;
-    background-color: #f6f6f6;
-    .list-places {
-      opacity: 0;
-      margin-top: 20px;
+    border-top: 1px solid $colorBorder;
+    background-color: $themeColor;
+    color: $colorText;
+    transition: 0.2s height ease-in-out;
+    &.expanded {
+      padding: 10px;
+      height: 50%;
     }
   }
 
-  .expanded {
-    border: 1px solid $colorBorder;
-    padding: 10px;
-    width: 43%;
-    .list-places {
-      opacity: 1;
-      margin-top: 0;
-    }
-  }
+
 
   .item {
     list-style-type: none;

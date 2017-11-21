@@ -1,13 +1,14 @@
-$green: #639733;
-$grey: #5f5f5f;
-$red: #9e0036;
-$blue: #136a9d;
-$orange: #e5730b;
+$themeColor: #877ebd;
+
+$success: #639733;
+$default: #5f5f5f;
+$primary: #9e0036;
+$danger: #9e0036;
+$warning: #e5730b;
 
 $colorBgr: #efefef;
-$colorText: #333333;
-$colorBorder: #e4e4e4;
+$colorText: darken($themeColor, 25%);
+$colorBorder: darken($themeColor, 20%);
 
 $standardPadding: 20px;
 
-$themeColor: #877ebd;

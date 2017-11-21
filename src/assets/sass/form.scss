@@ -9,15 +9,16 @@ input[type=date],
 input[type=datetime],
 input[type=email],
 textarea {
+  background-color: transparent;
   font: 13px/1 'Open Sans', sans-serif;
-  border: 1px solid #ccc;
+  border: 1px solid $colorBorder;
   --webkit-appearance: none;
   line-height: 38px;
   padding: 0 16px;
   outline: none;
   height: 40px;
   &:focus {
-    border-color: darken($themeColor, 10%);
+    border-color: darken($colorBorder, 20%);
     transition: border-color 0.2s ease-in-out;
   }
 
@@ -60,21 +61,75 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .form-error {
-  color: $red;
+  color: $danger;
 }
 
 .search {
   position: relative;
   input {
     width: 100%;
-    border: 6px solid $themeColor;
+    border: 4px solid $themeColor;
+    &:focus {
+      border: 4px solid $themeColor;
+    }
   }
   &::after {
     font-family: FontAwesome;
     content: '\0f002';
     position: absolute;
     right: 15px;
-    top: 11px;
+    top: 9px;
     color: #ccc;
   }
+}
+
+.form-group {
+  input[type="text"].form-control {
+    display: block;
+    width: 100%;
+  }
+}
+
+
+button, input[type=submit], input[type=reset], .btn {
+  display: inline-block;
+  cursor: pointer;
+  height: 40px;
+  line-height: 38px;
+  font: 13px/1 'Open Sans', sans-serif;
+  color: #fff;
+  padding: 0 16px;
+  border: 0;
+  --webkit-appearance: none;
+  outline: none;
+
+  &.btn-default {
+    background-color: $default;
+    &:hover {
+      background-color: darken($default, 10%);
+    }
+  }
+
+  &.btn-success {
+    background-color: $success;
+    &:hover {
+      background-color: darken($success, 10%);
+    }
+  }
+
+  &.btn-danger {
+    background-color: $danger;
+    &:hover {
+      background-color: darken($danger, 10%);
+    }
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.btn-block {
+  width: 100%;
 }

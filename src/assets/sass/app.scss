@@ -11,48 +11,9 @@ body, html {
   color: $colorText;
 }
 
-button, input[type=submit], input[type=reset], .btn {
-  display: inline-block;
-  cursor: pointer;
-  height: 40px;
-  line-height: 38px;
-  font: 13px/1 'Open Sans', sans-serif;
-  color: #fff;
-  padding: 0 16px;
-  border: 0;
-  --webkit-appearance: none;
-  outline: none;
-
-  &.btn-default {
-    background-color: $grey;
-    &:hover {
-      background-color: darken($grey, 10%);
-    }
-  }
-
-  &.btn-success {
-    background-color: $green;
-    &:hover {
-      background-color: darken($green, 10%);
-    }
-  }
-
-  &.btn-danger {
-    background-color: $red;
-    &:hover {
-      background-color: darken($red, 10%);
-    }
-  }
-
-  &[disabled] {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-}
-
 a {
   text-decoration: none;
-  color: $red;
+  color: $primary;
 }
 
 h1, h2 {

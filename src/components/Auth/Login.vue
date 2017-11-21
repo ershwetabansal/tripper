@@ -1,69 +1,56 @@
 <template>
-<div>
-  <div class="map" id="google-map"></div>
-  <div class="main">
-    <ul>
-      <li @click="googleLogin" class="google">
-        <i class="fa fa-google" aria-hidden="true"></i>
-        Sign Up with Google
-      </li>
-      <li class="facebook">
-        <i class="fa fa-facebook" aria-hidden="true"></i>
-        Sign Up with Facebook
-      </li>
-      <li class="twitter">
-        <i class="fa fa-twitter" aria-hidden="true"></i>
-        Sign Up with Twitter
-      </li>
-      <li>
-        <router-link to="/home" tag="a">Continue without Sign Up</router-link>
-      </li>
-    </ul>
-    <p class="footer">Sign Up is required to sync the trips/plans</p>
-  </div>
-</div>
+  <map-underlay>
+    <div slot="main">
+      <ul>
+        <li @click="googleLogin" class="google">
+          <i class="fa fa-google" aria-hidden="true"></i>
+          Sign Up with Google
+        </li>
+        <li class="facebook">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+          Sign Up with Facebook
+        </li>
+        <li class="twitter">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+          Sign Up with Twitter
+        </li>
+        <li>
+          <router-link to="/plan/create" tag="a">Continue without Sign Up</router-link>
+        </li>
+      </ul>
+      <p class="footer">Sign Up is required to sync the trips/plans</p>
+    </div>
+  </map-underlay>
 </template>
 
 <script>
-  import { map } from '../../services'
   import { googleAuth } from '../../auth/oauth'
+  import MapUnderlay from '../Layout/MapUnderlay.vue'
 
   export default {
+    components: { MapUnderlay },
+
     data: function () {
       return {
         access_token: null,
-        response: null,
-        map: null
+        response: null
       }
     },
 
     methods: {
       googleLogin () {
         googleAuth.directAccess().signIn().then(googleUser => {
-          this.$router.push('/home')
+          this.$router.push('/plan/create')
         }).catch(response => console.log(response))
       }
-    },
-
-    mounted () {
-      this.map = map.generate('google-map', {
-        center: {lat: 0, lng: 0},
-        zoom: 2,
-        disableDefaultUI: true
-      })
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  .main {
-    position: absolute;
-    top: 0;
-    margin-top: 20vh;
-    padding: 10%;
-    width: 100%;
-  }
   ul {
+     margin-top: 20vh;
+     padding: 10%;
     > li {
       padding: 10px;
       text-align: center;
@@ -92,13 +79,6 @@
         }
       }
     }
-  }
-
-  .map {
-    height: 100vh;
-    opacity: 0.3;
-    pointer-events: none;
-    overflow: hidden;
   }
 
   .fa {

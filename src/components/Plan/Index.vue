@@ -3,7 +3,7 @@
     <div class="container">
       <div>
         <div class="search">
-          <input type="text" placeholder="Enter location" ref="input" id="auto-complete"/>
+          <input type="text" placeholder="Where are you starting from?" ref="search" id="auto-complete"/>
         </div>
         <div class="map" id="google-map"></div>
       </div>
@@ -15,10 +15,10 @@
 </template>
 
 <script>
-  import Route from './Route.vue'
-  import { eventBus } from '../utils'
-  import PlaceList from './Place/PlaceList.vue'
-  import { map, place, marker, direction, distance } from '../services'
+  import Route from '../Route.vue'
+  import { eventBus } from '../../utils/index'
+  import PlaceList from '../Place/PlaceList.vue'
+  import { map, place, marker, direction, distance } from '../../services/index'
 
   export default {
     name: 'Home',
@@ -82,6 +82,7 @@
     },
 
     mounted () {
+      this.$refs.search.focus()
       this.map = map.generate('google-map', {
         center: this.center,
         zoom: this.zoom
