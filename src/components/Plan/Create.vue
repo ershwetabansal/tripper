@@ -2,37 +2,29 @@
   <map-underlay>
     <div slot="main" class="container">
       <div class="box">
-        <form v-on:submit.prevent="createTrip">
-          <div class="form-group">
-            <label>Give a name to your trip</label>
-            <input type="text" placeholder="Iceland adventure" class="form-control" ref="name" required>
-          </div>
-
-          <div class="form-group">
-            <label>Start date of trip</label>
-            <input type="text" class="form-control">
-          </div>
-
-          <div class="form-group">
-            <label>End date of trip</label>
-            <input type="text" class="form-control">
-          </div>
-
-          <button class="btn btn-success btn-block">Plan your trip</button>
-        </form>
+        <create-form :trip="trip">
+           <button slot="controls" class="btn btn-success btn-block" @click="createTrip">Plan your trip</button>
+        </create-form>
       </div>
     </div>
   </map-underlay>
 </template>
 
 <script>
+  import CreateForm from './Form.vue'
   import MapUnderlay from '../Layout/MapUnderlay.vue'
 
   export default {
-    components: { MapUnderlay },
+    components: { MapUnderlay, CreateForm },
 
     data: function () {
-      return {}
+      return {
+        trip: {
+          name: '',
+          start_date: '',
+          end_date: ''
+        }
+      }
     },
 
     methods: {
