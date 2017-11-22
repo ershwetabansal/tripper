@@ -2,8 +2,8 @@
   <map-underlay>
     <div slot="main" class="container">
       <div class="box">
-        <create-form :trip="trip">
-           <button slot="controls" class="btn btn-success btn-block" @click="createTrip">Plan your trip</button>
+        <create-form :trip="trip" :on-submit="createTrip">
+           <button slot="controls" class="btn btn-success btn-block">Plan your trip</button>
         </create-form>
       </div>
     </div>

@@ -92,21 +92,21 @@
     mounted () {
       this.$refs.search.focus()
       /* eslint-disable no-undef */
-      this.map = map.generate('google-map', {
-        center: this.center,
-        zoom: this.zoom,
-        scaleControl: false,
-        gestureHandling: 'cooperative',
-        zoomControl: true,
-        zoomControlOptions: {
-          position: google.maps.ControlPosition.RIGHT_TOP
-        },
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: false
+      map.isReady().then(() => {
+        this.map = map.generate('google-map', {
+          center: this.center,
+          zoom: this.zoom,
+          scaleControl: false,
+          zoomControl: true,
+          zoomControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_TOP
+          },
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: false
+        })
+        place.registerAutocomplete('auto-complete', this.addNewPlace)
       })
-
-      place.registerAutocomplete('auto-complete', this.addNewPlace)
 
       eventBus.on('update-places', places => {
         this.places = places

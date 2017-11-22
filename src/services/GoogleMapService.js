@@ -26,6 +26,10 @@ export const map = {
       directionsService = new google.maps.DirectionsService()
       return mapInstance
     })
+  },
+
+  isReady () {
+    return mapInitializingPromise
   }
 }
 

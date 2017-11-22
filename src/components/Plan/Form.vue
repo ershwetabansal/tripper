@@ -1,5 +1,5 @@
 <template>
-  <form v-on:submit.prevent>
+  <form v-on:submit.prevent="onSubmit">
     <div class="form-group">
       <label>Give a name to your trip</label>
       <input type="text" placeholder="Iceland adventure" class="form-control" ref="name" required v-model="trip.name">
@@ -22,7 +22,8 @@
 <script>
   export default {
     props: {
-      trip: Object
+      trip: Object,
+      onSubmit: Function
     },
 
     mounted () {
