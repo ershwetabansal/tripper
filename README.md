@@ -1,6 +1,6 @@
 # tripper
 
-> A project to plan the trip
+> An app to manage/create/share trip plans.
 
 ## Build Setup
 
