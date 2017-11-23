@@ -16,7 +16,8 @@
 
 <script>
   import Route from '../Route.vue'
-  import { eventBus } from '../../utils/index'
+  import { eventBus } from '../../utils'
+  import { tripStore } from '../../stores'
   import PlaceList from '../Place/PlaceList.vue'
   import { map, place, marker, direction, distance } from '../../services/index'
 
@@ -27,6 +28,7 @@
 
     data: function () {
       return {
+        trip: {},
         places: [],
         routes: [],
         center: {lat: 0, lng: 0},
@@ -56,10 +58,10 @@
 
       addNewRoute (origin, destination) {
         let route
-        direction.between(origin.coordinates, destination.coordinates)
+        direction.between({ placeId: origin.place_id }, { placeId: destination.place_id })
           .then(response => {
             route = response
-            return distance.between(origin.coordinates, destination.coordinates)
+            return distance.between({ placeId: origin.place_id }, { placeId: destination.place_id })
           })
           .then(distanceDetails => {
             route.origin = origin
@@ -75,6 +77,7 @@
           this.$set(place, 'order', index + 1)
           place.marker.setLabel(String(index + 1))
         })
+        tripStore.updatePlaces(this.$route.params.uuid, this.places)
       },
 
       generateRoutes () {
@@ -90,23 +93,38 @@
     },
 
     mounted () {
+      tripStore.all()
+      this.trip = tripStore.get(this.$route.params.uuid)
+
+      if (!this.trip) {
+        this.$router.push('/trip/create')
+      }
+
       this.$refs.search.focus()
       /* eslint-disable no-undef */
-      map.isReady().then(() => {
-        this.map = map.generate('google-map', {
-          center: this.center,
-          zoom: this.zoom,
-          scaleControl: false,
-          zoomControl: true,
-          zoomControlOptions: {
-            position: google.maps.ControlPosition.RIGHT_TOP
-          },
-          mapTypeControl: false,
-          streetViewControl: false,
-          fullscreenControl: false
+      map.isReady()
+        .then(() => {
+          return map.generate('google-map', {
+            center: this.center,
+            zoom: this.zoom,
+            scaleControl: false,
+            zoomControl: true,
+            zoomControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            mapTypeControl: false,
+            streetViewControl: false,
+            fullscreenControl: false
+          })
         })
-        place.registerAutocomplete('auto-complete', this.addNewPlace)
-      })
+        .then(() => {
+          place.registerAutocomplete('auto-complete', this.addNewPlace)
+          if (this.places.length === 0 && this.trip.places.length > 0) {
+            this.trip.places.forEach(tripPlaceId => {
+              place.service().getByPlaceId(tripPlaceId, this.addNewPlace)
+            })
+          }
+        })
 
       eventBus.on('update-places', places => {
         this.places = places

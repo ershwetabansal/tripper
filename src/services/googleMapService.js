@@ -54,6 +54,15 @@ export const place = {
         callback(place)
       })
     })
+  },
+
+  service () {
+    const service = new google.maps.places.PlacesService(mapInstance)
+    return {
+      getByPlaceId (placeId, callback) {
+        return service.getDetails({ placeId }, callback)
+      }
+    }
   }
 }
 
@@ -98,7 +107,7 @@ export const direction = {
         directLine.setMap(mapInstance)
         response.mapObject = directLine
         resolve(response)
-      })
+      }, reject)
     })
   }
 }

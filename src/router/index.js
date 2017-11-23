@@ -14,7 +14,7 @@ export default new Router({
       component: Login
     },
     {
-      path: '/trip/places',
+      path: '/trip/:uuid/places',
       name: 'UpdateTrip',
       component: Trip
     },

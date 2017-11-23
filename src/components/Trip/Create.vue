@@ -12,6 +12,7 @@
 
 <script>
   import CreateForm from './Form.vue'
+  import { tripStore } from '../../stores'
   import MapUnderlay from '../Layout/MapUnderlay.vue'
 
   export default {
@@ -19,22 +20,15 @@
 
     data: function () {
       return {
-        trip: {
-          name: '',
-          start_date: '',
-          end_date: ''
-        }
+        trip: tripStore.getDefault()
       }
     },
 
     methods: {
       createTrip () {
-        this.$router.push('/plan/places')
+        const trip = tripStore.add(this.trip)
+        this.$router.push(`/trip/${trip.uuid}/places`)
       }
-    },
-
-    mounted () {
-      this.$refs.name.focus()
     }
   }
 </script>

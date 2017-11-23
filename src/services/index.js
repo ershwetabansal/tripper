@@ -1,2 +1,2 @@
-export * from './GoogleMapService'
+export * from './googleMapService'
 export * from './http'
