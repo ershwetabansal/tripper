@@ -15,7 +15,6 @@
 </template>
 
 <script>
-  import Route from '../Route.vue'
   import { eventBus } from '../../utils'
   import { tripStore } from '../../stores'
   import PlaceList from '../Place/PlaceList.vue'
@@ -24,7 +23,7 @@
   export default {
     name: 'Home',
 
-    components: { Route, PlaceList },
+    components: { PlaceList },
 
     data: function () {
       return {

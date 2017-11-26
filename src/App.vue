@@ -1,12 +1,16 @@
 <template>
   <div id="app">
     <router-view></router-view>
+    <t-menu></t-menu>
   </div>
 </template>
 
 <script>
+  import TMenu from './components/TMenu.vue'
   export default {
-    name: 'app'
+    name: 'app',
+
+    components: { TMenu }
   }
 </script>
 
