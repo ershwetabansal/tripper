@@ -43,7 +43,10 @@ export const tripStore = {
 
   updatePlaces (trip, places) {
     this.store.trips[this.getTripIndex(trip)].places = places
-    storage.put(`trip-${trip}-places`, JSON.stringify(places.map(place => place.place_id)))
+    const placeIds = places
+      .sort((a, b) => a.order - b.order)
+      .map(place => place.place_id)
+    storage.put(`trip-${trip}-places`, JSON.stringify(placeIds))
   },
 
   all () {
