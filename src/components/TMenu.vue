@@ -6,6 +6,7 @@
       <i class="fa fa-bars" aria-hidden="true" v-if="!isOpen"></i>
       <i class="fa fa-times" aria-hidden="true" v-if="isOpen"></i>
     </div>
+    <div class="side-overlay" v-if="isOpen" @click="close"></div>
     <div class="menu">
       <p>Welcome to tripper :)</p>
       <ul>
@@ -47,10 +48,11 @@
   @import '../assets/sass/_vars';
   .menu-container {
     position: relative;
-    width: 240px;
+    width: 78%;
     height: 100vh;
     padding: 30px;
-    background-color: #34495e;
+    background-color: $colorBgr;
+    border-right: 1px solid;
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
 
@@ -61,7 +63,7 @@
 
   .menu-activator {
     position: absolute;
-    top: 12px;
+    top: 10px;
     left: 100%;
     margin-left: 15px;
     font-weight: 600;
@@ -69,10 +71,26 @@
     letter-spacing: 0.08em;
     color: #fff;
     cursor: pointer;
+    z-index: 1;
   }
 
   .menu {
     position: absolute;
     color: $colorContrastText;
+  }
+
+  .side-overlay {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    left: 100%;
+    top: 0;
+    background-color: $colorBgr;
+    color: #fff;
+    opacity: 0.4;
+    .fa {
+      margin-top: 12px;
+      margin-left: 12px;
+    }
   }
 </style>
