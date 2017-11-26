@@ -15,7 +15,7 @@
           Sign Up with Twitter
         </li>
         <li>
-          <router-link to="/trip/create" tag="a">Continue without Sign Up</router-link>
+          <router-link to="/home" tag="a">Continue without Sign Up</router-link>
         </li>
       </ul>
       <p class="footer">Sign Up is required to sync the trips/plans</p>
@@ -40,7 +40,7 @@
     methods: {
       googleLogin () {
         googleAuth.directAccess().signIn().then(googleUser => {
-          this.$router.push('/trip/create')
+          this.$router.push('/home')
         }).catch(response => console.log(response))
       }
     }

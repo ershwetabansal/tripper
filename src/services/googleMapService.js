@@ -90,7 +90,11 @@ export const direction = {
     const directionsDisplay = new google.maps.DirectionsRenderer()
 
     return new Promise((resolve, reject) => {
-      directionsService.route({ origin, destination, travelMode }, (response, status) => {
+      directionsService.route({
+        origin: { placeId: origin.place_id },
+        destination: { placeId: destination.place_id },
+        travelMode
+      }, (response, status) => {
         if (status === 'OK') {
           directionsDisplay.setMap(mapInstance)
           directionsDisplay.setDirections(response)
@@ -98,7 +102,13 @@ export const direction = {
           return resolve(response)
         }
         const directLine = new google.maps.Polyline({
-          path: [origin, destination],
+          path: [{
+            lat: origin.geometry.location.lat(),
+            lng: origin.geometry.location.lng()
+          }, {
+            lat: destination.geometry.location.lat(),
+            lng: destination.geometry.location.lng()
+          }],
           geodesic: true,
           strokeColor: '#FF0000',
           strokeOpacity: 1.0,

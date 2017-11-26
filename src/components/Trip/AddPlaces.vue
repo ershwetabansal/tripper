@@ -58,7 +58,7 @@
 
       addNewRoute (origin, destination) {
         let route
-        direction.between({ placeId: origin.place_id }, { placeId: destination.place_id })
+        direction.between(origin, destination)
           .then(response => {
             route = response
             return distance.between({ placeId: origin.place_id }, { placeId: destination.place_id })
@@ -97,7 +97,7 @@
       this.trip = tripStore.get(this.$route.params.uuid)
 
       if (!this.trip) {
-        this.$router.push('/trip/create')
+        this.$router.push('/home')
       }
 
       this.$refs.search.focus()

@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Trip from '@/components/Trip/AddPlaces'
+import Home from '@/components/Home'
 import Login from '@/components/Auth/Login'
-import CreateTrip from '@/components/Trip/Create'
+import Trip from '@/components/Trip/AddPlaces'
 
 Vue.use(Router)
 
@@ -19,9 +19,9 @@ export default new Router({
       component: Trip
     },
     {
-      path: '/trip/create',
-      name: 'CreateTrip',
-      component: CreateTrip
+      path: '/home',
+      name: 'Home',
+      component: Home
     }
   ]
 })

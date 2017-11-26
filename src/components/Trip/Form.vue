@@ -6,14 +6,14 @@
     </div>
 
     <div class="form-group">
-      <label>Start date of trip</label>
+      <label>When are you going?</label>
       <input type="date" class="form-control" v-model="trip.start_date" :max="trip.end_date">
     </div>
 
-    <div class="form-group">
-      <label>End date of trip</label>
-      <input type="date" class="form-control" v-model="trip.end_date" :min="trip.start_date">
-    </div>
+    <!--<div class="form-group">-->
+      <!--<label>End date of trip</label>-->
+      <!--<input type="date" class="form-control" v-model="trip.end_date" :min="trip.start_date">-->
+    <!--</div>-->
 
     <slot name="controls"></slot>
   </form>
